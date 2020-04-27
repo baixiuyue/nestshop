@@ -6,7 +6,21 @@ import { LoginService } from './service/login/login.service';
 import { ManagerService } from './service/manager/manager.service';
 import { ManagerController } from './controller/manager/manager.controller';
 
+import { MongooseModule } from '@nestjs/mongoose';
+import { AdminSchema } from '../../schema/admin.schema';
+import { RoleSchema } from '../../schema/role.schema'; 
+import { AccessSchema } from '../../schema/access.schema'; 
+import { RoleAccessSchema } from '../../schema/role_access.schema'; 
+
 @Module({
+  imports:[
+    MongooseModule.forFeature([
+      { name: 'Admin', schema: AdminSchema,collection:"admin" },
+      { name: 'Role', schema: RoleSchema,collection:"role" } ,
+      { name: 'Access', schema: AccessSchema,collection:"access" },
+      { name: 'RoleAccess', schema: RoleAccessSchema,collection:"role_access" }  
+   ])
+  ],
   controllers: [LoginController, ManagerController],
   providers: [LoginService, ManagerService]
 })

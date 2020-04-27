@@ -4,13 +4,12 @@ import { ApiModule } from './module/api/api.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DefaultModule } from './module/default/default.module';
 import { Config } from './config/config';
-import { LoginController } from './admin/controller/login/login.controller';
 
 @Module({
   imports: [AdminModule, ApiModule, DefaultModule,
     MongooseModule.forRoot(Config.mongmdbUrl,{ useNewUrlParser: true }) // 链接数据库
   ],
-  controllers: [LoginController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

@@ -38,7 +38,7 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views')) // 放视图的文件
   app.setViewEngine('ejs');
 
-  await app.listen(4200);
+  await app.listen(4210);
 
   // 打印全部路由路径 
   const server = app.getHttpServer();

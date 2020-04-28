@@ -28,7 +28,7 @@ export class LoginController {
     //设置session
     req.session.code = svgCaptcha.text;
     res.type('image/svg+xml');
-    return svgCaptcha.data;
+    res.send(svgCaptcha.data);
   }
 
   @Post('doLogin')

@@ -15,7 +15,7 @@ export class Helper {
     }
     static getCaptcha() {
         let captcha = svgCaptcha.create({
-            size: 2,
+            size: 4,
             fontSize: 50,
             width: 100,
             height: 34,

@@ -1,0 +1,71 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar"
+            nzCollapsible
+            nzWidth="256px"
+            nzBreakpoint="md"
+            [(nzCollapsed)]="isCollapsed"
+            [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <div class="flex justify-center">
+        <img src="../../../assets/images/logo.svg" alt="logo">
+      </div>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="系统管理" nzIcon="setting">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/user">用户管理</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/role">角色管理</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/access">权限管理</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a>Basic Form</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i class="trigger"
+               nz-icon
+               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></i>
+        </span>
+        <span class="float-right">
+          <a nz-dropdown [nzDropdownMenu]="menu">
+            <nz-avatar nzIcon="user"></nz-avatar>
+            <span class="text-lg mr-5">admin</span>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <!-- <li nz-menu-item>
+                <i nz-icon nzType="sync"></i>刷新
+              </li> -->
+              <li nz-menu-item (click)="outLogin()">
+                <i nz-icon nzType="logout"></i>退出
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </span>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+

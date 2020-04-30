@@ -21,7 +21,7 @@ export class AdminMiddleware implements NestMiddleware {
         if (userInfo.exp < now) { // token过期
           errorType = ResponseErrorType.authorizedExpiresDate;
         } else {
-          Helper.cacheManager.get(userInfo.username, function (err, result) {
+        await Helper.cacheManager.get(userInfo.username, function (err, result) {
             if (result && result !== token) { // 账号异地登录
               errorType = ResponseErrorType.otherLogin
             } else if (result === undefined) { //  拿不到缓存值 没登录或者非法操作

@@ -13,7 +13,10 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.use(helmet()); // 保护http请求头部信X-Powered-By等息泄露
-  app.enableCors();  // 解决跨域问题
+  app.enableCors({
+    credentials: true,
+    origin: true,
+  });  // 解决跨域问题
 
   //app.setGlobalPrefix('nest'); // 全局路由前缀
 
@@ -23,9 +26,9 @@ async function bootstrap() {
   //配置session的中间件
   app.use(session({
     secret: 'keyboard cat',
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: Config.sessionMaxAge, httpOnly: true },
+    resave: false,//强制session保存到session store中
+    saveUninitialized: false,//强制没有‘初始化’的session保存到storage中
+    cookie: { maxAge: Config.sessionMaxAge, httpOnly: false },
     rolling: true
   }));
 

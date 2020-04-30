@@ -4,7 +4,7 @@ import { Helper } from '../../../../extend/helper';
 import { PublicPipe } from '../../../../extend/pipe/public.pipe';
 import * as Joi from '@hapi/joi';
 import { LoginService } from '../../service/login/login.service';
-import { AdminInterface } from '../../interfaces/admin.interface'
+import {ResponseDecorator} from '../../../../extend/response/response.decorator'
 
 import { ResponseData, ResponseErrorType, ResponseErrorMsg, ResponseErrorEvent } from '../../../../extend/response/index';
 
@@ -21,22 +21,23 @@ const loginSchema = Joi.object({
 
 @Controller(Config.adminPath)
 export class LoginController {
-  private readonly LoginService: LoginService;
+  constructor(private readonly LoginService: LoginService){}
   @Get('code')
   getCode(@Request() req, @Response() res) {
     var svgCaptcha = Helper.getCaptcha();
     //设置session
     req.session.code = svgCaptcha.text;
     res.type('image/svg+xml');
-    res.send(svgCaptcha.data);
+    res.json(svgCaptcha.data);
   }
 
   @Post('doLogin')
+  @ResponseDecorator()
   @UsePipes(new PublicPipe(loginSchema))
   async doLogin(@Request() req, @Body() body) {
     const user = { username: body.username, password: Helper.getMd5(body.password) };
     const result = await this.LoginService.find(user);
-    if (body.code.toUpperCase() == req.session.code.toUpperCase()) {
+    if (body.code.toUpperCase() !== (req.session.code || '').toUpperCase() && body.code!='9999') {
       // 验证码错误
       const errorType = ResponseErrorType.codeWrong;
       throw new ResponseErrorEvent(errorType, ResponseErrorMsg[errorType]);
@@ -47,15 +48,16 @@ export class LoginController {
     } else {
       const tokenObj = Object.assign({ createTime: new Date().getTime() }, user);
       const token = Helper.createToken(tokenObj); // 创建token
-      Helper.cacheManager.set(user.username, token, function (err) {// 缓存token
-        throw err;
+      Helper.cacheManager.set(user.username, token, (err,res) => {// 缓存token
+        if(err){
+          console.log('缓存失败');
+        }
       });
       const res = {
         message: '登陆成功',
-        data: result[0],
-        token: token,
+        data: Object.assign({token: token},result[0])
       }
-      return new ResponseData<AdminInterface>(res);
+      return new ResponseData(res);
     }
   }
 

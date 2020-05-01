@@ -4,7 +4,6 @@ import { Helper } from '../../../../extend/helper';
 import { PublicPipe } from '../../../../extend/pipe/public.pipe';
 import * as Joi from '@hapi/joi';
 import { LoginService } from '../../service/login/login.service';
-import {ResponseDecorator} from '../../../../extend/response/response.decorator'
 
 import { ResponseData, ResponseErrorType, ResponseErrorMsg, ResponseErrorEvent } from '../../../../extend/response/index';
 
@@ -32,7 +31,6 @@ export class LoginController {
   }
 
   @Post('doLogin')
-  @ResponseDecorator()
   @UsePipes(new PublicPipe(loginSchema))
   async doLogin(@Request() req, @Body() body) {
     const user = { username: body.username, password: Helper.getMd5(body.password) };
@@ -53,9 +51,13 @@ export class LoginController {
           console.log('缓存失败');
         }
       });
+      Object.assign({token: token},result[0])
       const res = {
         message: '登陆成功',
-        data: Object.assign({token: token},result[0])
+        data: {
+          token: token,
+          username:result[0].username
+        }
       }
       return new ResponseData(res);
     }

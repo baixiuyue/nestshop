@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '../../services/http';
+import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import * as Joi from '@hapi/joi';
 import { Helper } from '../../extend/helper';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { Store } from '@ngrx/store';
+import { adminState } from '../../extend/interface';
+import { SetUserInfo } from '../../services/store/action';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +25,10 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   isLoad: boolean = false;
+
   constructor(private $http: Http,
+    private router:Router,
+    private $store: Store<adminState>,
     private sanitizer: DomSanitizer,
     private model: NzModalService) { }
 
@@ -59,10 +66,8 @@ export class LoginComponent implements OnInit {
       res => {
         this.isLoad = false;
         if (res.statusCode === 0) {
-          this.model.success({
-            nzTitle: '提示',
-            nzContent: res.message,
-          });
+          this.$store.dispatch(SetUserInfo({user:res.data}));
+          this.router.navigateByUrl('/admin/user');
         } else {
           this.model.error({
             nzTitle: '提示',

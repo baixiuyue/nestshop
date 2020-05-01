@@ -5,11 +5,25 @@ import { throwError } from 'rxjs'
 import { catchError, retry, tap } from 'rxjs/operators';
 import { Router} from '@angular/router';
 
-const baseurl = Config.adminAPIUrl;
+import { adminState, userInfo } from '../extend/interface';
+import { Store } from '@ngrx/store';
+import { getAdimState } from '../services/store/adminReducer';
 
+const baseurl = Config.adminAPIUrl;
+let userInfo: userInfo;
 @Injectable()
 export class BaseInterceptor implements HttpInterceptor {
-  constructor(private router:Router) { }
+  constructor(
+    private router:Router,
+    private store: Store<adminState>) {
+
+      store.select(getAdimState).subscribe(
+        res => {
+         userInfo = res.userInfo;
+        },
+      );
+
+     }
   intercept(req, next: HttpHandler) {
     let url = `${baseurl}${req.url}` ;
     if (/^https?:\/\//.test(req.url)) {
@@ -20,7 +34,7 @@ export class BaseInterceptor implements HttpInterceptor {
     const notToken = Config.notTokenUrls.some(url=>req.url.indexOf(url)>-1);
     const token = req.headers.get('access_token');
     if (!notToken && token) {
-      req.headers = req.headers.set('access_token', 'my-new-auth-token');
+      req.headers = req.headers.set('access_token', userInfo.token || 'is not token');
     }
     // send cloned request with header to the next handler.
     return next.handle(req)

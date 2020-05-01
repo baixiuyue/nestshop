@@ -1,12 +1,4 @@
-<g-load></g-load>>
+<g-load *ngIf="isLoad"></g-load>
 <nz-space>
-  <nz-space-item>
-    <button nz-button nzType="primary">Button</button>
-  </nz-space-item>
-  <nz-space-item>
-    <button nz-button><i nz-icon nzType="upload"></i>Click to Upload</button>
-  </nz-space-item>
-  <nz-space-item>
-    <button nz-button nz-popconfirm nzOkText="Yes" nzCancelText="No" nzPopconfirmTitle="Are you sure delete this task?">Confirm</button>
-  </nz-space-item>
+  <h1>欢迎您：{{userInfo.username}}</h1>
 </nz-space>

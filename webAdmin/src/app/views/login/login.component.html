@@ -1,17 +1,17 @@
 <g-load *ngIf="isLoad"></g-load>
 <div class="bg-blue-900 w-full h-full flex justify-center items-center">
-  <form class=" line-through" nz-form>
+  <form autocomplete="off" nz-form>
     <nz-form-item class="w-64 flex justify-center">
      <img src="../../../assets/images/logo.svg" >
     </nz-form-item>
     <nz-form-item class="w-64">
       <nz-input-group nzPrefixIcon="user">
-        <input type="text" nz-input placeholder="用户名" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"/>
+        <input autocomplete = "new-username" type="text" name="username" nz-input placeholder="用户名" [(ngModel)]="username"/>
       </nz-input-group>
     </nz-form-item>
     <nz-form-item class="w-64">
       <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="lock">
-        <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="密码" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
+        <input autocomplete = "new-password" name="password" [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="密码" [(ngModel)]="password"/>
       </nz-input-group>
       <ng-template #suffixTemplate>
         <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
@@ -22,7 +22,7 @@
       <nz-form-control>
         <div nz-row>
           <div nz-col>
-            <input class="w-40" type="text" nz-input placeholder="验证码" [(ngModel)]="code" [ngModelOptions]="{standalone: true}"/>
+            <input name="code" class="w-40" type="text" nz-input placeholder="验证码" [(ngModel)]="code"/>
           </div>
           <div nz-col class="w-24 cursor-pointer" (click)="getCode()">
             <img [src]="svgCaptcha">

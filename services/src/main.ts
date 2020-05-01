@@ -8,6 +8,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as expressListRoutes from 'express-list-routes';
 import * as helmet from 'helmet';
+import {HttpExceptionFilter} from './http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -40,6 +41,8 @@ async function bootstrap() {
   // 配置模板引擎 res.redirect('/user'); //路由跳转
   app.setBaseViewsDir(join(__dirname, '..', 'views')) // 放视图的文件
   app.setViewEngine('ejs');
+
+  app.useGlobalFilters(new HttpExceptionFilter());  // 异常处理
 
   await app.listen(4210);
 

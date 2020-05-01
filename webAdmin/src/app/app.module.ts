@@ -20,14 +20,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseInterceptor } from './services/base.service';
 import {Http} from './services/http';
 
+// 状态管理 https://blog.csdn.net/liutongj/article/details/92696305
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './services/store/metaReducer';
 
 const httpInterceptorProviders = [
  { provide: HTTP_INTERCEPTORS, useClass: BaseInterceptor, multi: true },
 ];
-
 registerLocaleData(zh);
 
-// 状态管理 https://blog.csdn.net/liutongj/article/details/92696305
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,12 +40,13 @@ registerLocaleData(zh);
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
     ...GlobalComps
   ],
   providers: [
     httpInterceptorProviders,
     Http,
-    AuthGuard, 
+    AuthGuard,
     { provide: NZ_I18N, useValue: zh_CN }
   ],
   bootstrap: [AppComponent]

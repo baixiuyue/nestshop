@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { adminState, userInfo } from '../../../../extend/interface';
-import { Store } from '@ngrx/store';
-import { getAdimState } from '../../../../services/store/adminReducer';
+import {  userInfo } from '../../../../interface/ngRxinterface';
+import {TootsService} from '../../../../services/toots.service';
 
 @Component({
   selector: 'app-user',
@@ -10,12 +8,12 @@ import { getAdimState } from '../../../../services/store/adminReducer';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+
   isLoad: boolean = false;
   userInfo: userInfo;
-  $adminState: Observable<adminState>
-  constructor(private store: Store<adminState>) {
-    this.$adminState = store.select(getAdimState);
-    this.$adminState.subscribe(
+
+  constructor(private toots:TootsService) {
+    this.toots.getAdminState().subscribe( 
       res => {
         this.userInfo = res.userInfo;
       },

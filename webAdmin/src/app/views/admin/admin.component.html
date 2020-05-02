@@ -45,7 +45,7 @@
         <span class="float-right">
           <a nz-dropdown [nzDropdownMenu]="menu">
             <nz-avatar nzIcon="user"></nz-avatar>
-            <span class="text-lg mr-5">admin</span>
+            <span class="text-lg mr-5">{{userInfo.username}}</span>
           </a>
           <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>

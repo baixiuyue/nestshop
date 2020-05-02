@@ -5,7 +5,7 @@ import { throwError } from 'rxjs'
 import { catchError, retry, tap } from 'rxjs/operators';
 import { Router} from '@angular/router';
 
-import { adminState, userInfo } from '../extend/interface';
+import { adminState, userInfo } from '../interface/ngRxinterface';
 import { Store } from '@ngrx/store';
 import { getAdimState } from '../services/store/adminReducer';
 

@@ -1,5 +1,5 @@
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
-import { adminState } from '../../extend/interface';
+import { adminState } from '../../interface/ngRxinterface';
 import { SetUserInfo } from './action';
 
 export const initialState: adminState = {

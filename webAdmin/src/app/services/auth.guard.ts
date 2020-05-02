@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree { // 路由拦截
-    console.log('路由拦截');
+    // console.log('路由拦截');
     return this.checkLogin(state.url);
   }
   canActivateChild(
@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree { // 子路由拦截
-    console.log('子路由拦截'+state.url);
+    // console.log('子路由拦截'+state.url);
     return this.checkLogin(state.url);
   }
   canLoad(
@@ -42,6 +42,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
   checkLogin(url: string) {
     this.authService.redirectUrl = url;
-    return true;
+    return this.authService.isLogin();
   }
 }

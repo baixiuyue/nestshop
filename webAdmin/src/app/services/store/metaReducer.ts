@@ -1,5 +1,5 @@
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
-import { AppState } from '../../extend/interface';
+import { AppState } from '../../interface/ngRxinterface';
 import * as articleReducer from './adminReducer';
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -8,8 +8,7 @@ export const reducers: ActionReducerMap<AppState> = {
 
 export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
   return function(state: AppState, action: any): AppState {
-    console.log('state', state);
-    console.log('action', action);
+    console.log('actionType', action.type);
     return reducer(state, action);
   };
 }

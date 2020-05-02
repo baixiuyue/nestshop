@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Config } from '../../configs/config';
 import { Http } from '../../services/http';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import * as Joi from '@hapi/joi';
 import { Helper } from '../../extend/helper';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { Store } from '@ngrx/store';
-import { adminState } from '../../extend/interface';
-import { SetUserInfo } from '../../services/store/action';
+import { TootsService } from '../../services/toots.service';
 
 @Component({
   selector: 'app-login',
@@ -27,10 +25,9 @@ export class LoginComponent implements OnInit {
   isLoad: boolean = false;
 
   constructor(private $http: Http,
-    private router:Router,
-    private $store: Store<adminState>,
-    private sanitizer: DomSanitizer,
-    private model: NzModalService) { }
+    private router: Router,
+    private toots: TootsService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.getCode();
@@ -56,23 +53,17 @@ export class LoginComponent implements OnInit {
   doLogin() {
     const param = this.verification();
     if (param instanceof Array) { // 验证错误
-      this.model.error({
-        nzTitle: '提示',
-        nzContent: param[0],
-      });
+      this.toots.message('erroe', param[0]);
       return false;
     }
     this.$http.post(this.urls.doLogin, param).subscribe(
       res => {
         this.isLoad = false;
         if (res.statusCode === 0) {
-          this.$store.dispatch(SetUserInfo({user:res.data}));
-          this.router.navigateByUrl('/admin/user');
+          this.toots.setUserInfo(res.data);
+          this.router.navigateByUrl(Config.firstUrl);
         } else {
-          this.model.error({
-            nzTitle: '提示',
-            nzContent: res.message,
-          });
+          this.toots.message('erroe', res.message);
         }
       },
       err => {

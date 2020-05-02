@@ -2,8 +2,8 @@
 import { format } from 'silly-datetime';
 import * as md5 from 'md5';
 export class Helper {
-    static formatTime(params, format) {
-        return format(params, format || 'YYYY-MM-DD HH:mm');
+    static formatTime(params, scheme?:string) {
+        return format(params, scheme || 'YYYY-MM-DD HH:mm:ss');
     }
     static getMd5(str: string) {
         return md5(str);

@@ -3,13 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './views/login/login.component';
 import { AuthGuard } from './services/auth.guard';
 
-const guard = { canActivate: [AuthGuard], canActivateChild: [AuthGuard] };
+
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   {
     path: 'admin',
-    loadChildren:  () => import('./views/admin/admin.module').then(m => m.AdminModule),
-    ...guard
+    loadChildren: () => import('./views/admin/admin.module').then(m => m.AdminModule),
+    canActivateChild: [AuthGuard]
   },
   { path: '**', redirectTo: 'login' }
 ];

@@ -7,8 +7,8 @@ import { Config } from '../config/config';
 import * as redisStore from 'cache-manager-redis-store';
 import * as cacheManager from 'cache-manager';
 export class Helper {
-    static formatTime(params, format) {
-        return format(params, format || 'YYYY-MM-DD HH:mm');
+    static formatTime(params, scheme?:string) {
+        return format(params, scheme || 'YYYY-MM-DD HH:mm:ss');
     }
     static getMd5(str: string) {
         return md5(str);

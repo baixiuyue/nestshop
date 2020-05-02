@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
   doLogin() {
     const param = this.verification();
     if (param instanceof Array) { // 验证错误
-      this.toots.message('erroe', param[0]);
+      this.toots.message('error', param[0]);
       return false;
     }
     this.$http.post(this.urls.doLogin, param).subscribe(
@@ -61,9 +61,10 @@ export class LoginComponent implements OnInit {
         this.isLoad = false;
         if (res.statusCode === 0) {
           this.toots.setUserInfo(res.data);
+          this.toots.$storage.set(Config.userStorageKay,res.data);
           this.router.navigateByUrl(Config.firstUrl);
         } else {
-          this.toots.message('erroe', res.message);
+          this.toots.message('error', res.message);
         }
       },
       err => {

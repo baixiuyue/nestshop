@@ -6,9 +6,11 @@ import { Observable } from 'rxjs';
 import { getAdimState } from './store/adminReducer';
 import { SetUserInfo } from './store/action';
 import {Config} from '../configs/config';
+import * as storage from 'local-storage';
 
+import { Router } from '@angular/router';
 import { NzModalService, ModalOptions } from 'ng-zorro-antd/modal';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzMessageService } from 'ng-zorro-antd/message';  
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class TootsService {
   confirm: Function;
   message: Function;
+  public $storage = storage;
   constructor(
+    private router: Router,
     public modal: NzModalService,
     private messageModule: NzMessageService,
     private $store: Store<adminState>) {
@@ -55,5 +59,10 @@ export class TootsService {
   }
   setUserInfo(user: userInfo) { // 将用户信息加入状态管理
     this.$store.dispatch(SetUserInfo({ user: user }));
+  }
+  outLogin(){ // 退出登录
+    this.setUserInfo({});
+    this.$storage.remove(Config.userStorageKay);
+    this.router.navigateByUrl('/login');
   }
 }

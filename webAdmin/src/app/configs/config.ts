@@ -4,6 +4,7 @@ export class Config {
   static notTokenUrls: Array<string> = ['admin/code','admin/doLogin']; //不需要token权限的url
   static notLoginUrls:  Array<string> = []; //不需要登陆权限的路由
   static firstUrl: string = 'admin/user'; // 登录后跳转的路由
+  static userStorageKay: string = 'USER_INFO'; 
 
   static initModal = { // modal默认值
     nzTitle: '温馨提示',

@@ -1,9 +1,11 @@
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import { adminState } from '../../interface/ngRxinterface';
 import { SetUserInfo } from './action';
+import { Config } from '../../configs/config';
+import * as storage from 'local-storage';
 
 export const initialState: adminState = {
-  userInfo:{}
+  userInfo:storage.get(Config.userStorageKay) || {}
 };
 
 export const adminReducer = createReducer(initialState,

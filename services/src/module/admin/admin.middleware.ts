@@ -21,21 +21,20 @@ export class AdminMiddleware implements NestMiddleware {
         if (userInfo.exp < now) { // token过期
           errorType = ResponseErrorType.authorizedExpiresDate;
         } else {
-        await Helper.cacheManager.get(userInfo.username, function (err, result) {
-            if (result && result !== token) { // 账号异地登录
-              errorType = ResponseErrorType.otherLogin
-            } else if (result === undefined) { //  拿不到缓存值 没登录或者非法操作
-              errorType = ResponseErrorType.unauthorized;
-            }
-          });
+          const redis = await Helper.cacheManager.get(userInfo.username);
+          if (redis && redis !== token) { // 账号异地登录
+            errorType = ResponseErrorType.otherLogin
+          } else if (redis === undefined) { //  拿不到缓存值 没登录或者非法操作
+            errorType = ResponseErrorType.unauthorized;
+          }
         }
       } catch (e) { //  无权限 token解密失败
         errorType = ResponseErrorType.unauthorized;
       }
     }
-    if(errorType){
+    if (errorType) {
       throw new ResponseErrorEvent(errorType, ResponseErrorMsg[errorType]);
-    }else{
+    } else {
       next();
     }
   }

@@ -35,27 +35,33 @@ export class LoginController {
   async doLogin(@Request() req, @Body() body) {
     const user = { username: body.username, password: Helper.getMd5(body.password) };
     const result = await this.LoginService.find(user);
+    let errorType = 0;
+    let token = '';
     if (body.code.toUpperCase() !== (req.session.code || '').toUpperCase() && body.code != '9999') {
       // 验证码错误
-      const errorType = ResponseErrorType.codeWrong;
-      throw new ResponseErrorEvent(errorType, ResponseErrorMsg[errorType]);
+      errorType = ResponseErrorType.codeWrong;
     } else if (result.length === 0) {
       // 用户名密码不匹配
-      const errorType = ResponseErrorType.userWrongPassword;
-      throw new ResponseErrorEvent(errorType, ResponseErrorMsg[errorType]);
+      errorType = ResponseErrorType.userWrongPassword;
     } else {
       const tokenObj = Object.assign({ createTime: new Date().getTime() }, user);
-      const token = Helper.createToken(tokenObj); // 创建token
-      Helper.cacheManager.set(user.username, token, (err, res) => {// 缓存token
-        if (err) {
-          console.log('缓存失败');
-        }
-      });
+      token = Helper.createToken(tokenObj); // 创建token
+      const redis = await Helper.cacheManager.set(user.username, token);
+      if (redis !== 'OK') {
+        const errorType = ResponseErrorType.unknown;
+      }
+    }
+
+    if(errorType){
+      throw new ResponseErrorEvent(errorType, ResponseErrorMsg[errorType]);
+    }else{
       const { _id, username, password, add_time, status, email, role_id, mobile } = result[0];
       const res = {
         message: '登陆成功',
-        data: { token: token, _id, username, password, 
-          add_time:Helper.formatTime(add_time), status, email, role_id, mobile }
+        data: {
+          token: token, _id, username, password,
+          add_time: Helper.formatTime(add_time), status, email, role_id, mobile
+        }
       }
       return new ResponseData(res);
     }

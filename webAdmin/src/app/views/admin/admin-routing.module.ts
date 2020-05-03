@@ -10,9 +10,9 @@ const routes: Routes = [
   {
     path: '', component: AdminComponent,
     children: [
-      { path: 'user', component: UserComponent },
-      { path: 'role', component: RoleComponent },
-      { path: 'access', component: AccessComponent },
+      { path: 'user', component: UserComponent, data: { title: '用户管理' } },
+      { path: 'role', component: RoleComponent, data: { title: '角色管理' } },
+      { path: 'access', component: AccessComponent, data: { title: '权限管理' } },
       { path: '**', redirectTo: 'user' }
     ]
   },

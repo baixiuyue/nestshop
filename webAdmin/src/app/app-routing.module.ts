@@ -5,7 +5,7 @@ import { AuthGuard } from './services/auth.guard';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard], data: { title: '登录' } },
   {
     path: 'admin',
     loadChildren: () => import('./views/admin/admin.module').then(m => m.AdminModule),

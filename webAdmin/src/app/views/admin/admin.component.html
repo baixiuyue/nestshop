@@ -1,10 +1,6 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
     <div class="sidebar-logo">
       <div class="flex justify-start ml-2">
         <img src="../../../assets/images/logo.png" alt="logo">
@@ -37,35 +33,38 @@
     <nz-header>
       <div class="app-header">
         <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
         </span>
-        <span class="float-right">
-          <a nz-dropdown [nzDropdownMenu]="menu">
-            <nz-avatar nzIcon="user"></nz-avatar>
-            <span class="text-lg mr-5">{{userInfo.username}}</span>
+        <span class="float-right text-sm">
+          <a class="mr-5">
+            <nz-avatar nzIcon="user" nzSize="small"></nz-avatar>
+            <span>{{userInfo.username}}</span>
           </a>
-          <nz-dropdown-menu #menu="nzDropdownMenu">
-            <ul nz-menu nzSelectable>
-              <!-- <li nz-menu-item>
-                <i nz-icon nzType="sync"></i>刷新
-              </li> -->
-              <li nz-menu-item (click)="outLogin()">
-                <i nz-icon nzType="logout"></i>退出
-              </li>
-            </ul>
-          </nz-dropdown-menu>
+          <a class="mr-5" (click)="outLogin()" title="退出">
+            <i nz-icon nzType="logout" class="text-lg"></i>
+          </a>
         </span>
       </div>
     </nz-header>
-    <nz-content>
+    <nz-row class="p-1 bg-gray-300" (contextmenu)="contextMenu($event, menu)">
+      <nz-tag *ngFor="let item of routerTabList; let i=index" [nzChecked]="item.url===activeRouterUrl"
+        (nzOnClose)="close(i)" (click)="tabClick(item.url)" [nzMode]="i===0?'default':'closeable'">
+        <a>{{item.name}}</a>
+      </nz-tag>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="refreshClick()">
+            <i nz-icon nzType="sync"></i>刷新
+          </li>
+          <li nz-menu-item (click)="closeOther()">关闭其他</li>
+          <li nz-menu-item (click)="closeAll()">关闭所有</li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-row>
+    <nz-content class="nz_content" *ngIf="!refresh">
       <div class="inner-content">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
   </nz-layout>
 </nz-layout>
-
-

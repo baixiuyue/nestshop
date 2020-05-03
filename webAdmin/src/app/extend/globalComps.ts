@@ -5,6 +5,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 export const GlobalComps = [
   NzFormModule,
@@ -13,5 +14,6 @@ export const GlobalComps = [
   NzIconModule,
   GlobalModule,
   NzModalModule,
-  NzMessageModule
+  NzMessageModule,
+  NzTagModule
 ]

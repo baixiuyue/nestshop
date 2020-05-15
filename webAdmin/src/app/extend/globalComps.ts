@@ -1,3 +1,4 @@
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { GlobalModule} from '../comps/global/global.module'
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -8,6 +9,8 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 
 export const GlobalComps = [
+  FormsModule,
+  ReactiveFormsModule,
   NzFormModule,
   NzInputModule,
   NzButtonModule,

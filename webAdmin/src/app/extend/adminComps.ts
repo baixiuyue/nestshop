@@ -7,6 +7,9 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 export const AdmonComps =[
   NzLayoutModule,
@@ -17,5 +20,8 @@ export const AdmonComps =[
   NzBreadCrumbModule,
   NzTableModule,
   NzDividerModule,
-  NzGridModule
+  NzGridModule,
+  NzDrawerModule,
+  NzSelectModule,
+  NzRadioModule
 ]

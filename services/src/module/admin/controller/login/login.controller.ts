@@ -43,12 +43,14 @@ export class LoginController {
     } else if (result.length === 0) {
       // 用户名密码不匹配
       errorType = ResponseErrorType.userWrongPassword;
+    }else if(!result[0].status){
+      errorType = ResponseErrorType.disable;
     } else {
       const tokenObj = Object.assign({ createTime: new Date().getTime() }, user);
       token = Helper.createToken(tokenObj); // 创建token
       const redis = await Helper.cacheManager.set(user.username, token);
       if (redis !== 'OK') {
-        const errorType = ResponseErrorType.unknown;
+        errorType = ResponseErrorType.unknown;
       }
     }
 

@@ -48,7 +48,8 @@
     </nz-header>
     <nz-row class="p-1 bg-gray-300" (contextmenu)="contextMenu($event, menu)">
       <nz-tag *ngFor="let item of routerTabList; let i=index" [nzChecked]="item.url===activeRouterUrl"
-        (nzOnClose)="close(i)" (click)="tabClick(item.url)" [nzMode]="i===0?'default':'closeable'">
+        (nzOnClose)="close(i)" (click)="tabClick(item.url)" [nzMode]="i===0?'default':'closeable'"
+        [nzColor]="item.url===activeRouterUrl?'processing':'default'">
         <a>{{item.name}}</a>
       </nz-tag>
       <nz-dropdown-menu #menu="nzDropdownMenu">

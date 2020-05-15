@@ -1,0 +1,58 @@
+<form nz-form [nzAutoTips]="autoTips" [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>用户名</nz-form-label>
+    <nz-form-control [nzSpan]="10" nzValidatingTip="校验中...">
+      <input nz-input formControlName="username" placeholder="用户名" autocomplete="off"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>手机号码</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <input nz-input formControlName="mobile" placeholder="手机号码" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>状态</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <nz-radio-group formControlName="status" nzButtonStyle="solid" nzSize="small">
+        <label nz-radio-button [nzValue]="1">启用</label>
+        <label nz-radio-button [nzValue]="0">禁用</label>
+      </nz-radio-group>
+      
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>邮箱</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <input nz-input type="email" formControlName="email" placeholder="邮箱" autocomplete="off"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" [nzRequired]="selectTiem?false:true">密码</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <input nz-input type="password" formControlName="password" placeholder="密码" autocomplete="new-password"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" [nzRequired]="selectTiem?false:true">确认密码</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <input nz-input type="password" formControlName="confirm" placeholder="确认密码" autocomplete="new-password"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>角色</nz-form-label>
+    <nz-form-control [nzSpan]="10">
+      <nz-select formControlName="role_id">
+        <nz-option *ngFor="let item of roleList" [nzValue]="item._id" [nzLabel]="item.title"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="5" [nzSpan]="10">
+      <button nz-button type="submit" nzType="primary">提交</button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button type="submit" nzType="default" (click)="closeModal()">取消</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<g-load *ngIf="isLoad"></g-load>

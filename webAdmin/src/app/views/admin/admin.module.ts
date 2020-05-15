@@ -7,9 +7,11 @@ import { IconsProviderModule } from '../../icons-provider.module';
 
 import { GlobalComps } from '../../extend/globalComps';
 import { AdmonComps } from '../../extend/adminComps';
+import { AddedituserComponent } from './components/user/components/addedituser/addedituser.component';
+import { AddeditroleComponent } from './components/role/components/addeditrole/addeditrole.component';
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, AddedituserComponent, AddeditroleComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

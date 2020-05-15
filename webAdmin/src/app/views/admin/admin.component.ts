@@ -68,7 +68,7 @@ export class AdminComponent implements OnInit {
     this.refresh = true;
     setTimeout(()=>{
       this.refresh = false;
-    },500);
+    },100);
   }
   closeAll(){
     this.routerTabList = [];

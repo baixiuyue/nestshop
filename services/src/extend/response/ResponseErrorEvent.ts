@@ -22,6 +22,10 @@ export enum ResponseErrorType {
    */
   authorizedExpiresDate = 402,
   /**
+     * 账号被禁用
+     */
+  disable = 997,
+  /**
    * 未登录,请先登录
    */
   notLogin = 998,
@@ -42,6 +46,7 @@ export const ResponseErrorMsg: { [key: number]: string } = {
   0: '',
   401: '您没有此权限',
   402: '您的权限已过期, 请重新登录',
+  997: '账号被禁用',
   998: '未登录,请先登录',
   999: '账号异地登录',
   1000: '验证码不正确',

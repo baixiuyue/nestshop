@@ -17,4 +17,31 @@ export class ManagerService {
   getModel() {
     return this.adminModel;
   }
+  async add(json: AdminInterface) {
+    try {
+      var admin = new this.adminModel(json);
+      var result = await admin.save();
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async update(json1: AdminInterface, json2: AdminInterface) {
+    try {
+      var result = await this.adminModel.updateOne(json1, json2);
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async delete(json: AdminInterface) {
+    try {
+      var result = await this.adminModel.deleteOne(json);
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
 }

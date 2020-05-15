@@ -24,7 +24,7 @@ export class AdminMiddleware implements NestMiddleware {
           const redis = await Helper.cacheManager.get(userInfo.username);
           if (redis && redis !== token) { // 账号异地登录
             errorType = ResponseErrorType.otherLogin
-          } else if (redis === undefined) { //  拿不到缓存值 没登录或者非法操作
+          } else if (!redis) { //  拿不到缓存值 没登录或者非法操作
             errorType = ResponseErrorType.unauthorized;
           }
         }

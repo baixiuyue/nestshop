@@ -55,3 +55,24 @@ p { word-break:break-all; }
 p { text-overflow:ellipsis; overflow:hidden; }
 
 ```
+# from https://angular.cn/guide/reactive-forms
+```
+this.studentForm.valueChanges.subscribe(data => this.onStudentFormValueChange(data));
+
+onStudentFormValueChange(data) {
+    this.selectedStudent.age = data.age
+    this.selectedStudent.email = data.email
+    this.selectedStudent.nameSurname = data.nameSurname
+    // or
+    for (const key in this.studentForm.controls) {
+       const control = this.studentForm.get(key);
+       this.selectedStudent[key] = control.value
+    }
+}
+this.studentForm
+    .patchValue({
+       age: data.age,
+       email:data.email,
+       nameSurname:data.nameSurname
+  });
+```

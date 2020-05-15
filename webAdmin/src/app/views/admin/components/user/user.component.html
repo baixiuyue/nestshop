@@ -10,18 +10,19 @@
       <nz-form-item class="w-32">
         <nz-form-control>
           <nz-input-group nzPrefixIcon="user">
-            <input type="text" nz-input placeholder="用户名" />
+            <input type="text" nz-input placeholder="用户名" [formControl]="userName"  />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary" nzSize="small"><i nz-icon nzType="search"></i>查询</button>
+          <button nz-button nzType="primary" nzSize="small" (click)="getList()"><i nz-icon nzType="search"></i>查询</button>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary" nzGhost nzSize="small"><i nz-icon nzType="plus"></i>新增</button>
+          <button nz-button nzType="primary" nzGhost nzSize="small" (click)="openAdd()"><i nz-icon
+              nzType="plus"></i>新增</button>
         </nz-form-control>
       </nz-form-item>
       <!-- <nz-form-item>
@@ -32,7 +33,7 @@
     </form>
   </nz-row>
   <nz-content>
-    <nz-table #basicTable [nzShowPagination]="false" [nzData]="dataList">
+    <nz-table nzSize="small" #basicTable [nzShowPagination]="false" [nzData]="dataList">
       <thead>
         <tr>
           <th>名称</th>
@@ -49,16 +50,20 @@
           <td>{{ data.username }}</td>
           <td>{{ data.mobile }}</td>
           <td>{{ data.email }}</td>
-          <td>{{ data.role_id }}</td>
-          <td>{{ data.status }}</td>
+          <td>{{ data.role }}</td>
+          <td [innerHTML]="data.statusTitle"></td>
           <td>{{ data.add_time }}</td>
           <td>
-            <button nz-button nzType="primary" nzSize="small" nzGhost>修改</button>
+            <button nz-button nzType="primary" nzSize="small" nzGhost (click)="openEdit(data)">修改</button>
             <nz-divider nzType="vertical"></nz-divider>
-            <button nz-button nzType="default" nzSize="small" nzDanger>删除</button>
+            <button nz-button nzType="default" nzSize="small" nzDanger (click)="delete(data)">删除</button>
           </td>
         </tr>
       </tbody>
     </nz-table>
   </nz-content>
 </nz-layout>
+<nz-drawer *ngIf="visible" [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="false" [nzWidth]="500" [nzVisible]="visible" [nzTitle]="selectItem?'修改管理员':'新增管理员'" (nzOnClose)="close()">
+  <user-addedituser [selectTiem]="selectItem" (close)="close()" (upDate)="getList()" #addedituser></user-addedituser>
+</nz-drawer>

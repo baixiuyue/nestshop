@@ -11,6 +11,8 @@ import { AdminSchema } from '../../schema/admin.schema';
 import { RoleSchema } from '../../schema/role.schema'; 
 import { AccessSchema } from '../../schema/access.schema'; 
 import { RoleAccessSchema } from '../../schema/role_access.schema'; 
+import { RoleService } from './service/role/role.service';
+import { RoleController } from './controller/role/role.controller';
 
 @Module({
   imports:[
@@ -21,8 +23,8 @@ import { RoleAccessSchema } from '../../schema/role_access.schema';
       { name: 'RoleAccess', schema: RoleAccessSchema,collection:"role_access" }  
    ])
   ],
-  controllers: [LoginController, ManagerController],
-  providers: [LoginService, ManagerService]
+  controllers: [LoginController, ManagerController, RoleController],
+  providers: [LoginService, ManagerService, RoleService]
 })
 export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
